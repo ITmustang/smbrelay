@@ -38,9 +38,9 @@ The tool will run Terminator with 4 windows.
 
 ***Top right***: Launch Reply on the network interface set in the configuration.
 
-***Bottom left***: Launch of the Reverse Shell.
+***Bottom left***: Launch of the Reverse Shell. *** update*** this now launches a meterpreter shell
 
-***Bottom right***: Launching the Nishang script to the victima computer
+***Bottom right***: Launching the Nishang script to the victim computer
 
 ![SMBRelay](./images/smbrelay3.png)
 
