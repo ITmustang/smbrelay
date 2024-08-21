@@ -10,7 +10,7 @@
 
 *** In progress *** re-writing tool to use tmux instead of terminator ***
 
-SMBRelay is an SMB relay attack script, which automates all the steps to preform smbrelay attacks on internal pentests.
+SMBRelay is an SMB relay attack script, which automates all the steps to perform smbrelay attacks on internal pentests.
 
 SMBRelay creates and delivers the payload leveraging the Nishang tool.
 
