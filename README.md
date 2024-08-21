@@ -17,7 +17,7 @@ SMBRelay creates and delivers the payload leveraging the Nishang tool.
 ## Installation
 
 ```bash
-git clone https://github.com/ITmustang/smbrelay
+git clone https://github.com/ITmustang/smbrelay.git
 cd smbrelay; chmod +x smbrelay.sh
 ./smbrelay.sh --install
 ```
