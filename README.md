@@ -8,50 +8,44 @@
 
 ![SMBRelay](./images/name.png)
 
-**SMBRelay** es un script de ataque de retransmisión SMB, que automatiza todos los pasos para retransmitir la solicitud de autenticación a estos sistemas con el objetivo de obtener un shell. Ideal para realizar pruebas de penetración.
+SMBRelay is an SMB relay attack script, which automates all the steps to relay the authentication request to these systems in order to obtain a shell. Ideal for performing penetration tests.
 
-SMBRelay crea y entrega la carga útil aprovechando la herramienta Nishang.
+SMBRelay creates and delivers the payload leveraging the Nishang tool.
 
 ## Instalación
 
 ```bash
-git clone https://github.com/m4lal0/smbrelay
+git clone https://github.com/ITmustang/smbrelay
 cd smbrelay; chmod +x smbrelay.sh
 ./smbrelay.sh --install
 ```
 
-Al ejecutarlo realizará la instalación de las dependencias y configura la terminal Terminator para su uso correcto. El script de instalación funciona con administradores de paquetes apt (Debian).
+When you run it, it will install the dependencies and configure the Terminator terminal for correct use. The installation script works with apt (Debian) package managers.
 
-## ¿Cómo ejecuto la herramienta?
+## How do I run the tool?
 
-Para ejecutar la herramienta solo es necesario ejecutarlo de la siguiente manera (como root):
+To run the tool you only need to run it as follows (as root):
 
-```bash
 ./smbrelay.sh
-```
 
 ![SMBRelay](./images/smbrelay.png)
 
-La herramienta ejecutará la terminal Terminator con 4 divisiones.
+The tool will run Terminator with 4 windows.
 
-***Arriba a la izquierda*** : Configuración de parametros para el uso del ataque SMB Relay.
+***Top left***: Parameter configuration for using the SMB Relay attack.
 
-***Arriba a la derecha*** : Lanzamiento de Responder en la interfaz de red establecida en la configuración.
+***Top right***: Launch Reply on the network interface set in the configuration.
 
-***Abajo a la izquierda*** : Lanzamiento de la Reverse Shell.
+***Bottom left***: Launch of the Reverse Shell.
 
-***Abajo a la derecha*** : Lanzamiento del script Nishang al equipo victima.
+***Bottom right***: Launching the Nishang script to the victima computer
 
 ![SMBRelay](./images/smbrelay3.png)
 
-## Actualizar la herramienta
+## Update the tool
 
-Para poder actualizar la herramienta es necesario ejecutarla con el parámetro **--update** ó **-u**, con ello verifica si existe una nueva versión y si la acepta, se iniciará la actualización completa.
+In order to update the tool, it is necessary to run it with the **--update** or **-u** parameter, thereby verifying whether a new version exists and if it is accepted, the complete update will begin.
 
 ```
 ./smbrelay.sh --update
 ```
-
-## NOTA
-
-Ejecute esta herramienta sólo cuando tenga permiso para hacerlo. Este script es creado para fines educativos o para hacer auditorias profesionales de pentesting a nivel empresarial.
