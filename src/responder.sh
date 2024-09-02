@@ -19,7 +19,7 @@ IFACE=$(cat iface.txt)
 perl -pi -e "s[SMB = On][SMB = Off]g" /usr/share/responder/Responder.conf
 perl -pi -e "s[HTTP = On][HTTP = Off]g" /usr/share/responder/Responder.conf
 
-# Iniciando Responder
+# Setting Up Responder
 responder -I $IFACE -dw
 
 sleep 5
