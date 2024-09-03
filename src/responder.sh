@@ -8,7 +8,13 @@ Color_Off='\033[0m'     # Text Reset
 # Hide the cursor
 tput civis
 
-# Wait for .attack file to be created
+# Check if .attack file exists, if not, create it
+if [ ! -f .attack ]; then
+    touch .attack
+    echo "The .attack file did not exist and has been created."
+fi
+
+# Wait for .attack file to signal readiness
 while [ ! -f .attack ]; do
     clear
     echo -e "${LBlue}[${BBlue}+${LBlue}] ${BWhite}Setting up Responder...${Color_Off}\n"
