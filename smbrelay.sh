@@ -122,7 +122,7 @@ function checkUpdate(){
 
 function installUpdate(){
     echo -en "${Yellow}[*]${Color_Off} ${IWhite}Installing updates...${Color_Off}"
-    git clone https://github.com/m4lal0/smbrelay &>/dev/null
+    git clone https://github.com/ITmutstang/smbrelay &>/dev/null
     chmod +x smbrelay/smbrelay.sh && mv smbrelay/src/* src &>/dev/null
     mv smbrelay/smbrelay.sh . &>/dev/null
     if [ "$(echo $?)" == "0" ]; then
@@ -167,7 +167,7 @@ function update(){
 
 function install(){
     banner
-    dependencies=(terminator responder rlwrap ncat python3 nishang perl python3-impacket)
+    dependencies=(tmux responder rlwrap ncat python3 nishang perl python3-impacket shellter)
     echo -e "\n${LBlue}[${BBlue}+${LBlue}] ${BBlue}Checking required tools:${Color_Off}\n"
     for program in "${dependencies[@]}"; do
         echo -ne "${LBlue}[${BBlue}*${LBlue}] ${BWhite}Tool: $program...${Color_Off}"
