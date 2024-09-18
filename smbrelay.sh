@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 # By @m4lal0
+# Modded by ITmustang
 
 # Regular Colors
 Black='\033[0;30m'      # Black
@@ -108,7 +109,7 @@ function banner(){
 }
 
 function checkUpdate(){
-    GIT=$(curl --silent https://github.com/m4lal0/smbrelay/blob/main/smbrelay.sh | grep 'VERSION=' | cut -d">" -f2 | cut -d"<" -f1 | cut -d"=" -f 2)
+    GIT=$(curl --silent https://github.com/ITmustang/smbrelay/blob/main/smbrelay.sh | grep 'VERSION=' | cut -d">" -f2 | cut -d"<" -f1 | cut -d"=" -f 2)
     if [[ "$GIT" == "$VERSION" || -z $GIT ]]; then
         echo -e "${BGreen}[✔]${Color_Off} ${BGreen}The current version is the latest one.${Color_Off}\n"
         tput cnorm; exit 0
